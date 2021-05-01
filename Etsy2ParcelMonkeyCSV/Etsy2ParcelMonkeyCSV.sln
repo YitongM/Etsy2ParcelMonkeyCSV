@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30611.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Etsy2ParcelMonkeyCSV", "Etsy2ParcelMonkeyCSV.csproj", "{027EC9D1-3AC3-4D8E-A0E7-65E9475E308D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{027EC9D1-3AC3-4D8E-A0E7-65E9475E308D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{027EC9D1-3AC3-4D8E-A0E7-65E9475E308D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{027EC9D1-3AC3-4D8E-A0E7-65E9475E308D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{027EC9D1-3AC3-4D8E-A0E7-65E9475E308D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {49FD7C8A-8804-4F8D-A9C2-7317BB958FB8}
+	EndGlobalSection
+EndGlobal
