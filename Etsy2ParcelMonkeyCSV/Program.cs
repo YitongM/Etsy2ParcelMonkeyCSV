@@ -131,7 +131,7 @@ namespace Etsy2ParcelMonkeyCSV
                         CopyStream(stream, file);
                     }
 
-                    WriteSuccessMessage(string.Format("NICE!!! CSV file with {0} order(s) exported successfully!!", exportCounter));
+                    WriteSuccessMessage(string.Format("NICE!!! CSV file with {0} order(s) exported successfully!! File exported: {1}{2}", exportCounter, exportPath, exportFilename));
                     logger.InfoFormat("NICE!!! CSV file with {0} order(s) exported successfully!!", exportCounter);
 
                     Console.ForegroundColor = ConsoleColor.Yellow;
