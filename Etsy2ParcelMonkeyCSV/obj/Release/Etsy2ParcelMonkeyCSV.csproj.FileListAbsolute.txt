@@ -14,8 +14,8 @@ C:\Users\ymao\source\repos\Etsy2ParcelMonkeyCSV\Etsy2ParcelMonkeyCSV\bin\Release
 C:\Users\ymao\source\repos\Etsy2ParcelMonkeyCSV\Etsy2ParcelMonkeyCSV\bin\Release\System.Memory.xml
 C:\Users\ymao\source\repos\Etsy2ParcelMonkeyCSV\Etsy2ParcelMonkeyCSV\bin\Release\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\ymao\source\repos\Etsy2ParcelMonkeyCSV\Etsy2ParcelMonkeyCSV\bin\Release\System.ValueTuple.xml
+C:\Users\ymao\source\repos\Etsy2ParcelMonkeyCSV\Etsy2ParcelMonkeyCSV\obj\Release\Etsy2ParcelMonkeyCSV.csprojAssemblyReference.cache
 C:\Users\ymao\source\repos\Etsy2ParcelMonkeyCSV\Etsy2ParcelMonkeyCSV\obj\Release\Etsy2ParcelMonkeyCSV.csproj.CoreCompileInputs.cache
 C:\Users\ymao\source\repos\Etsy2ParcelMonkeyCSV\Etsy2ParcelMonkeyCSV\obj\Release\Etsy2ParcelMonkeyCSV.csproj.CopyComplete
 C:\Users\ymao\source\repos\Etsy2ParcelMonkeyCSV\Etsy2ParcelMonkeyCSV\obj\Release\Etsy2ParcelMonkeyCSV.exe
 C:\Users\ymao\source\repos\Etsy2ParcelMonkeyCSV\Etsy2ParcelMonkeyCSV\obj\Release\Etsy2ParcelMonkeyCSV.pdb
-C:\Users\ymao\source\repos\Etsy2ParcelMonkeyCSV\Etsy2ParcelMonkeyCSV\obj\Release\Etsy2ParcelMonkeyCSV.csprojAssemblyReference.cache

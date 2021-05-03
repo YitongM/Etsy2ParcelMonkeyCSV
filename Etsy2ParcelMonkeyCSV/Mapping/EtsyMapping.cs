@@ -1,10 +1,5 @@
 ﻿using CsvHelper.Configuration;
 using Etsy2ParcelMonkeyCSV.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Etsy2ParcelMonkeyCSV.Mapping
 {

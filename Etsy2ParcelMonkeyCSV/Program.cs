@@ -3,7 +3,6 @@ using Etsy2ParcelMonkeyCSV.Helpers;
 using Etsy2ParcelMonkeyCSV.Mapping;
 using Etsy2ParcelMonkeyCSV.Models;
 using log4net;
-using log4net.Repository.Hierarchy;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -11,8 +10,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Etsy2ParcelMonkeyCSV
 {
@@ -27,16 +24,16 @@ namespace Etsy2ParcelMonkeyCSV
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("Please paste the Etsy CSV folder path on your drive:");
             Console.ForegroundColor = ConsoleColor.White;
-            string folderPath = Console.ReadLine();
+            string importFolderPath = Console.ReadLine();
 
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("Please paste the Etsy file name with the file extension \".csv\":");
             Console.ForegroundColor = ConsoleColor.White;
-            string filename = Console.ReadLine();
+            string importFilename = Console.ReadLine();
 
-            string fullPath = folderPath + "\\" + filename;
+            string importFullPath = importFolderPath + "\\" + importFilename;
 
-            logger.InfoFormat("Got the full file path: {0}", fullPath);
+            logger.InfoFormat("Got the full file path: {0}", importFullPath);
 
             List<EtsyImport> orders;
 
@@ -44,7 +41,7 @@ namespace Etsy2ParcelMonkeyCSV
             {
                 #region Import the Etsy data
 
-                orders = CsvImportHelper.Import<EtsyImport>(fullPath, typeof(EtsyMapping), true, false);
+                orders = CsvImportHelper.Import<EtsyImport>(importFullPath, typeof(EtsyMapping), true, false);
                 WriteSuccessMessage(string.Format("{0} orders successfully imported.", orders.Count()));
                 logger.InfoFormat("{0} orders successfully imported.", orders.Count());
 
@@ -54,6 +51,7 @@ namespace Etsy2ParcelMonkeyCSV
 
                 // Filter only the orders which don't have a DatePosted yet, cuz those with a DatePosted are already shipped.
                 List<EtsyImport> filteredOrders = orders.FindAll(o => o.DatePosted == string.Empty);
+                Console.WriteLine(string.Format("Found {0} order(s) not posted yet. Only the orders without a posted date in the Etsy file will be exported.", filteredOrders.Count()));
 
                 List<MonkeyExport> exportList = new List<MonkeyExport>();
                 int exportCounter = 0;
@@ -71,25 +69,25 @@ namespace Etsy2ParcelMonkeyCSV
                     {
                         CustomerShipmentReference = order.OrderID,
                         OrderDate = order.SaleDate,
-                        Weight = "0.5kg",
-                        Length = "20cm",
-                        Width = "15cm",
-                        Height = "10cm",
-                        SenderName = "",
-                        SenderEmail = "",
-                        SenderPhone = "",
-                        SenderAddressOrganisation = "",
-                        SenderAddressLine1 = "",
-                        SenderAddressLine2 = "",
-                        SenderAddressCity = "",
-                        SenderAddressProvince = "",
-                        SenderAddressPostcode = "",
-                        SenderAddressCountryCode = "",
-                        IsSenderAddressResidential = "Yes",
+                        Weight = ConfigurationManager.AppSettings["Weight"],
+                        Length = ConfigurationManager.AppSettings["Length"],
+                        Width = ConfigurationManager.AppSettings["Width"],
+                        Height = ConfigurationManager.AppSettings["Height"],
+                        SenderName = ConfigurationManager.AppSettings["SenderName"],
+                        SenderEmail = ConfigurationManager.AppSettings["SenderEmail"],
+                        SenderPhone = ConfigurationManager.AppSettings["SenderEmail"],
+                        SenderAddressOrganisation = ConfigurationManager.AppSettings["SenderEmail"],
+                        SenderAddressLine1 = ConfigurationManager.AppSettings["SenderAddressLine1"],
+                        SenderAddressLine2 = ConfigurationManager.AppSettings["SenderAddressLine2"],
+                        SenderAddressCity = ConfigurationManager.AppSettings["SenderAddressCity"],
+                        SenderAddressProvince = ConfigurationManager.AppSettings["SenderAddressProvince"],
+                        SenderAddressPostcode = ConfigurationManager.AppSettings["SenderAddressPostcode"],
+                        SenderAddressCountryCode = ConfigurationManager.AppSettings["SenderAddressCountryCode"],
+                        IsSenderAddressResidential = ConfigurationManager.AppSettings["IsSenderAddressResidential"],
                         CollectionNotes = "",
                         RecipientName = order.FullName,
-                        RecipientEmail = "",
-                        RecipientPhone = "",
+                        RecipientEmail = "marjorie@spicyfrog64.com",
+                        RecipientPhone = "0611400478",
                         DeliveryAddressOrganisation = "",
                         DeliveryAddressLine1 = order.Street1,
                         DeliveryAddressLine2 = order.Street2,
@@ -99,18 +97,18 @@ namespace Etsy2ParcelMonkeyCSV
                         DeliveryAddressCountrycode = countryCode,
                         IsDeliveryAddressResidential = "Yes",
                         DeliveryNote = "",
-                        CustomsInvoiceType = "Commercial",
-                        CustomsExportReason = "Sold",
-                        CustomsExportType = "Permanent",
-                        CodeCountryManufacture = "FR",
-                        SenderCustomsType = "Business",
-                        SenderCustomsTaxReference = "",
-                        SenderCustomsCompanyName = "",
-                        RecipientCustomsType = "Private Individual",
+                        CustomsInvoiceType = ConfigurationManager.AppSettings["CustomsInvoiceType"],
+                        CustomsExportReason = ConfigurationManager.AppSettings["CustomsExportReason"],
+                        CustomsExportType = ConfigurationManager.AppSettings["CustomsExportType"],
+                        CodeCountryManufacture = ConfigurationManager.AppSettings["CodeCountryManufacture"],
+                        SenderCustomsType = ConfigurationManager.AppSettings["SenderCustomsType"],
+                        SenderCustomsTaxReference = ConfigurationManager.AppSettings["SenderCustomsTaxReference"],
+                        SenderCustomsCompanyName = ConfigurationManager.AppSettings["SenderCustomsCompanyName"],
+                        RecipientCustomsType = ConfigurationManager.AppSettings["RecipientCustomsType"],
                         RecipientCustomsTaxReference = "",
                         RecipientCustomsCompanyName = "",
-                        CurrencyCode = "EUR",
-                        ProductDescription = "",
+                        CurrencyCode = ConfigurationManager.AppSettings["CurrencyCode"],
+                        ProductDescription = ConfigurationManager.AppSettings["ProductDescription"],
                         ProductQuantity = order.NumberofItems,
                         ProductUnitPrice = (float.Parse(order.OrderValue, CultureInfo.InvariantCulture.NumberFormat) / float.Parse(order.NumberofItems)).ToString()
                     });
@@ -121,14 +119,14 @@ namespace Etsy2ParcelMonkeyCSV
                 try
                 {
                     DateTime today = DateTime.Now;
-                    string path = string.Format("{0}\\Exports\\", Directory.GetCurrentDirectory());
+                    string exportPath = string.Format("{0}\\Exports\\", Directory.GetCurrentDirectory());
                     string exportFilename = string.Format("exported-orders_{0}.csv", today.ToString("ddMMyyyy-HHmm"));
                     HttpResponseMessage response = CsvExportHelper.Export<MonkeyExport>(exportList, typeof(MonkeyMapping), exportFilename, true);
 
                     var stream = AsyncHelper.RunSync(async () => await response.Content.ReadAsStreamAsync());
 
                     // Saving file to the desired path
-                    using (var file = File.Create(path + exportFilename))
+                    using (var file = File.Create(exportPath + exportFilename))
                     {
                         CopyStream(stream, file);
                     }
@@ -136,6 +134,9 @@ namespace Etsy2ParcelMonkeyCSV
                     WriteSuccessMessage(string.Format("NICE!!! CSV file with {0} order(s) exported successfully!!", exportCounter));
                     logger.InfoFormat("NICE!!! CSV file with {0} order(s) exported successfully!!", exportCounter);
 
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine(":) If you find this little tool useful, buy me a coffee: https://paypal.me/opaleLBC");
+                    Console.WriteLine("Thank you! ^_^");
                     Console.ReadLine();
                 }
                 catch (Exception ex)
